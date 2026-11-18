@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>Antwoord genereren</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+    <script src="https://appsforoffice.microsoft.com/lib/1.1/host/office.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+    <script src="reply-dialog.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="dialog-container">
+        <div class="header">
+            <h2>Antwoord genereren</h2>
+        </div>
+
+        <div class="email-preview">
+            <h3>Originele e-mail</h3>
+            <div class="email-header">
+                <p><strong>Onderwerp:</strong> <span id="dialog-subject"></span></p>
+                <p><strong>Van:</strong> <span id="dialog-from"></span></p>
+            </div>
+            <div class="email-body" id="dialog-body"></div>
+        </div>
+
+        <div class="options-form">
+            <h3>Opties</h3>
+            
+            <div class="form-group">
+                <label for="reply-tone">Toon:</label>
+                <select id="reply-tone">
+                    <option value="">Standaard (professioneel)</option>
+                    <option value="formeel">Formeel</option>
+                    <option value="informele">Informeel</option>
+                    <option value="vriendelijk">Vriendelijk</option>
+                    <option value="dringend">Dringend</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="reply-style">Stijl:</label>
+                <select id="reply-style">
+                    <option value="">Standaard</option>
+                    <option value="beknopt">Beknopt</option>
+                    <option value="uitgebreid">Uitgebreid</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="reply-model">Model:</label>
+                <select id="reply-model">
+                    <option value="mistral-tiny">mistral-tiny (snel)</option>
+                    <option value="mistral-small">mistral-small (gebalanceerd)</option>
+                    <option value="mistral-medium">mistral-medium (krachtig)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="additional-context">Aanvullende context:</label>
+                <textarea id="additional-context" rows="3" placeholder="Voeg extra context toe voor een beter antwoord..."></textarea>
+            </div>
+        </div>
+
+        <div class="dialog-actions">
+            <button id="btn-cancel" class="btn btn-secondary">Annuleren</button>
+            <button id="btn-generate" class="btn btn-primary">Genereer Antwoord</button>
+        </div>
+
+        <div id="loading-overlay" class="loading-overlay" style="display: none;">
+            <div class="spinner"></div>
+            <p>Mistral AI aan het genereren...</p>
+        </div>
+    </div>
+</body>
+</html>

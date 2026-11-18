@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+  xsi:type="MailApp">
+
+  <!-- Basisgegevens -->
+  <Id>c8e1d63e-9d8f-4f7a-8b3d-1e2f3a4b5c6d</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Reggestad ICT Specialisten</ProviderName>
+  <DefaultLocale>nl-NL</DefaultLocale>
+  <DisplayName DefaultValue="Mistral Email Assistant"/>
+  <Description DefaultValue="Een Outlook-add-in voor het genereren en beantwoorden van e-mails met Mistral AI."/>
+  <IconUrl DefaultValue="~/assets/icon-64.png"/>
+  <HighResolutionIconUrl DefaultValue="~/assets/icon-128.png"/>
+  <SupportUrl DefaultValue="https://www.reggestad.nl"/>
+  <AppDomains>
+    <AppDomain>https://www.reggestad.nl</AppDomain>
+  </AppDomains>
+
+  <!-- Host requirements -->
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.1"/>
+    </Sets>
+  </Requirements>
+
+  <!-- Form factor -->
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="~/src/taskpane/read.html"/>
+        <RequestedHeight>450</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+    <Form xsi:type="ItemEdit">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="~/src/taskpane/compose.html"/>
+        <RequestedHeight>500</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <!-- Permissies -->
+  <Permissions>ReadWriteItem</Permissions>
+
+  <!-- Regelgebaseerde activatie -->
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
+  </Rule>
+
+  <!-- Versie-overrides voor moderne Outlook (Windows, Mac, Web) -->
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_0">
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.3">
+        <bt:Set Name="Mailbox"/>
+      </bt:Sets>
+    </Requirements>
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+          <!-- Function file voor command handling -->
+          <FunctionFile resid="Commands.Url"/>
+          
+          <AllFormsFactor>
+            <!-- Extensieknop in berichtlijst (lezen) -->
+            <ExtensionPoint xsi:type="MessageReadCommandSurface">
+              <OfficeTab id="TabDefault">
+                <Group id="msgReadGroup">
+                  <Label resid="GroupLabel"/>
+                  <Control xsi:type="Button" id="msgReadOpenPaneButton">
+                    <Label resid="TaskpaneButton.Label"/>
+                    <Supertip>
+                      <Title resid="TaskpaneButton.Label"/>
+                      <Description resid="TaskpaneButton.Tooltip"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="Icon.16x16"/>
+                      <bt:Image size="32" resid="Icon.32x32"/>
+                      <bt:Image size="80" resid="Icon.80x80"/>
+                    </Icon>
+                    <Action xsi:type="ShowTaskpane">
+                      <SourceLocation resid="Taskpane.Url"/>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="msgReadGenerateReply">
+                    <Label resid="GenerateReplyButton.Label"/>
+                    <Supertip>
+                      <Title resid="GenerateReplyButton.Label"/>
+                      <Description resid="GenerateReplyButton.Tooltip"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="Icon.16x16"/>
+                      <bt:Image size="32" resid="Icon.32x32"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>generateReply</FunctionName>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="msgReadSummarize">
+                    <Label resid="SummarizeButton.Label"/>
+                    <Supertip>
+                      <Title resid="SummarizeButton.Label"/>
+                      <Description resid="SummarizeButton.Tooltip"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="Icon.16x16"/>
+                      <bt:Image size="32" resid="Icon.32x32"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>summarizeEmail</FunctionName>
+                    </Action>
+                  </Control>
+                </Group>
+              </OfficeTab>
+            </ExtensionPoint>
+            
+            <!-- Extensieknop in bewerkingsmodus (nieuw bericht/reply) -->
+            <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+              <OfficeTab id="TabDefault">
+                <Group id="msgComposeGroup">
+                  <Label resid="GroupLabel"/>
+                  <Control xsi:type="Button" id="msgComposeOpenPaneButton">
+                    <Label resid="TaskpaneButton.Label"/>
+                    <Supertip>
+                      <Title resid="TaskpaneButton.Label"/>
+                      <Description resid="TaskpaneButton.Tooltip"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="Icon.16x16"/>
+                      <bt:Image size="32" resid="Icon.32x32"/>
+                    </Icon>
+                    <Action xsi:type="ShowTaskpane">
+                      <SourceLocation resid="TaskpaneCompose.Url"/>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="msgComposeGenerateEmail">
+                    <Label resid="GenerateEmailButton.Label"/>
+                    <Supertip>
+                      <Title resid="GenerateEmailButton.Label"/>
+                      <Description resid="GenerateEmailButton.Tooltip"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="Icon.16x16"/>
+                      <bt:Image size="32" resid="Icon.32x32"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>generateEmail</FunctionName>
+                    </Action>
+                  </Control>
+                </Group>
+              </OfficeTab>
+            </ExtensionPoint>
+          </AllFormsFactor>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16x16" DefaultValue="~/assets/icon-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="~/assets/icon-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="~/assets/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="Commands.Url" DefaultValue="~/src/commands/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="~/src/taskpane/read.html"/>
+        <bt:Url id="TaskpaneCompose.Url" DefaultValue="~/src/taskpane/compose.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="GroupLabel" DefaultValue="Mistral AI"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Open Mistral"/>
+        <bt:String id="GenerateReplyButton.Label" DefaultValue="Antwoord genereren"/>
+        <bt:String id="GenerateEmailButton.Label" DefaultValue="E-mail genereren"/>
+        <bt:String id="SummarizeButton.Label" DefaultValue="Samenvatten"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Open het Mistral paneel voor geavanceerde e-mail functionaliteit."/>
+        <bt:String id="GenerateReplyButton.Tooltip" DefaultValue="Gebruik Mistral AI om automatisch een antwoord op deze e-mail te genereren."/>
+        <bt:String id="GenerateEmailButton.Tooltip" DefaultValue="Gebruik Mistral AI om automatisch een nieuwe e-mail te genereren."/>
+        <bt:String id="SummarizeButton.Tooltip" DefaultValue="Gebruik Mistral AI om een samenvatting van deze e-mail te genereren."/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>E-mail genereren</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+    <script src="https://appsforoffice.microsoft.com/lib/1.1/host/office.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+    <script src="compose-dialog.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="dialog-container">
+        <div class="header">
+            <h2>Nieuwe E-mail genereren</h2>
+        </div>
+
+        <div class="form-container">
+            <div class="form-group">
+                <label for="compose-dialog-subject">Onderwerp:</label>
+                <input type="text" id="compose-dialog-subject" placeholder="Voer een onderwerp in" />
+            </div>
+
+            <div class="form-group">
+                <label for="compose-dialog-to">Aan:</label>
+                <input type="text" id="compose-dialog-to" placeholder="Voer e-mailadressen in, gescheiden door komma's" />
+            </div>
+
+            <div class="form-group">
+                <label for="compose-dialog-cc">CC:</label>
+                <input type="text" id="compose-dialog-cc" placeholder="CC e-mailadressen, gescheiden door komma's" />
+            </div>
+
+            <div class="form-group">
+                <label for="compose-dialog-content">Inhoud/Context:</label>
+                <textarea id="compose-dialog-content" rows="5" placeholder="Beschrijf de inhoud of context voor de e-mail..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="compose-dialog-tone">Toon:</label>
+                <select id="compose-dialog-tone">
+                    <option value="">Standaard (professioneel)</option>
+                    <option value="formeel">Formeel</option>
+                    <option value="informele">Informeel</option>
+                    <option value="vriendelijk">Vriendelijk</option>
+                    <option value="dringend">Dringend</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="compose-dialog-style">Stijl:</label>
+                <select id="compose-dialog-style">
+                    <option value="">Standaard</option>
+                    <option value="beknopt">Beknopt</option>
+                    <option value="uitgebreid">Uitgebreid</option>
+                    <option value="technisch">Technisch</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="compose-dialog-model">Model:</label>
+                <select id="compose-dialog-model">
+                    <option value="mistral-tiny">mistral-tiny (snel)</option>
+                    <option value="mistral-small">mistral-small (gebalanceerd)</option>
+                    <option value="mistral-medium">mistral-medium (krachtig)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="compose-dialog-creativity">Creativiteit:</label>
+                <input type="range" id="compose-dialog-creativity" min="0.1" max="1" step="0.1" value="0.7" />
+                <span id="compose-dialog-creativity-value">0.7</span>
+            </div>
+        </div>
+
+        <div class="dialog-actions">
+            <button id="btn-compose-cancel" class="btn btn-secondary">Annuleren</button>
+            <button id="btn-compose-generate" class="btn btn-primary">Genereer E-mail</button>
+        </div>
+
+        <div id="compose-loading-overlay" class="loading-overlay" style="display: none;">
+            <div class="spinner"></div>
+            <p>Mistral AI aan het genereren...</p>
+        </div>
+    </div>
+</body>
+</html>

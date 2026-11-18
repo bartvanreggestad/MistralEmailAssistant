@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>Mistral Email Assistant - Lezen</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+    <script src="https://appsforoffice.microsoft.com/lib/1.1/host/office.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+    <script src="read.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Mistral Email Assistant</h1>
+            <p class="subtitle">Leesmodus - E-mail analyse en acties</p>
+        </div>
+
+        <div class="section">
+            <h2>E-mail Analyse</h2>
+            <div class="email-preview">
+                <div class="email-header">
+                    <p><strong>Onderwerp:</strong> <span id="email-subject"></span></p>
+                    <p><strong>Van:</strong> <span id="email-from"></span></p>
+                    <p><strong>Aan:</strong> <span id="email-to"></span></p>
+                </div>
+                <div class="email-body" id="email-body"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Snelle Acties</h2>
+            <div class="action-buttons">
+                <button id="btn-summarize" class="btn btn-primary">Samenvatten</button>
+                <button id="btn-translate" class="btn btn-secondary">Vertalen</button>
+                <button id="btn-generate-reply" class="btn btn-primary">Antwoord genereren</button>
+            </div>
+        </div>
+
+        <div class="section" id="ai-response-section" style="display: none;">
+            <h2>AI Respons</h2>
+            <div class="response-container">
+                <div class="loading" id="loading-indicator">
+                    <div class="spinner"></div>
+                    <p>Mistral AI aan het werk...</p>
+                </div>
+                <div class="response-content" id="ai-response"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Instellingen</h2>
+            <div class="settings-form">
+                <div class="form-group">
+                    <label for="api-key">Mistral API Key:</label>
+                    <input type="password" id="api-key" placeholder="Voer je Mistral API key in" />
+                    <button id="btn-save-key" class="btn btn-small">Opslaan</button>
+                    <span id="api-key-status" class="status"></span>
+                </div>
+                <div class="form-group">
+                    <label for="model-select">Model:</label>
+                    <select id="model-select">
+                        <option value="mistral-tiny">mistral-tiny (snel)</option>
+                        <option value="mistral-small">mistral-small (gebalanceerd)</option>
+                        <option value="mistral-medium">mistral-medium (krachtig)</option>
+                        <option value="mistral-large">mistral-large (expert)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Powered by Mistral AI | <a href="https://mistral.ai" target="_blank">mistral.ai</a></p>
+        </div>
+    </div>
+</body>
+</html>
